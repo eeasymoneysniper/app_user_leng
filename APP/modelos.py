@@ -1,5 +1,5 @@
 from sqlalchemy import Integer,Column,String,ForeignKey,DateTime,func
-from basededatos import Base
+from APP.basededatos import Base
 
 
 class users(Base):

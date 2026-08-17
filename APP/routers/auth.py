@@ -6,9 +6,9 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi import HTTPException,status,Depends
 from sqlalchemy.orm import Session
 from typing import Annotated
-from PRACTICA.modelos import users
-from PRACTICA.basededatos import get_db
-from PRACTICA.hash import verify
+from APP.modelos import users
+from APP.basededatos import get_db
+from APP.hash import verify
 from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter()
