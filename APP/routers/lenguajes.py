@@ -1,10 +1,10 @@
 from fastapi import APIRouter,HTTPException,Depends,status
 from sqlalchemy.orm import Session
 from typing import Annotated
-from PRACTICA.modelos import lenguajes,users
-from PRACTICA.basededatos import get_db
-from PRACTICA.esquemas import leng_post,leng_response,leng_put
-from PRACTICA.routers.auth import get_current_user
+from APP.modelos import lenguajes,users
+from APP.basededatos import get_db
+from APP.esquemas import leng_post,leng_response,leng_put
+from APP.routers.auth import get_current_user
 
 
 router = APIRouter()   

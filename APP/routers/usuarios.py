@@ -1,11 +1,11 @@
 from fastapi import APIRouter,HTTPException,Depends,status
 from sqlalchemy.orm import Session
 from typing import Annotated
-from PRACTICA.modelos import users
-from PRACTICA.basededatos import get_db
-from PRACTICA.esquemas import usuario_response,usuario_post,usuario_update
-from PRACTICA.hash import get_password_hashed,verify
-from PRACTICA.routers.auth import crear_token,get_current_user
+from APP.modelos import users
+from APP.basededatos import get_db
+from APP.esquemas import usuario_response,usuario_post,usuario_update
+from APP.hash import get_password_hashed,verify
+from APP.routers.auth import crear_token,get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter()
