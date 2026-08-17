@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>App Lenguajes - Frontend</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>App Lenguajes</h1>
+
+      <section id="login-section">
+        <h2>Login</h2>
+        <form id="login-form">
+          <label>DNI: <input name="dni" required /></label><br/>
+          <label>Password: <input name="password" type="password" required /></label><br/>
+          <button type="submit">Entrar</button>
+        </form>
+      </section>
+
+      <section id="user-section" style="display:none;">
+        <h2>Usuario <span id="user-id-display"></span></h2>
+        <div>
+          <label>Usuario ID: <input id="user-id-input" type="number" value="1" /></label>
+          <button id="load-langs">Cargar lenguajes</button>
+        </div>
+
+        <ul id="langs-list"></ul>
+
+        <h3>Agregar lenguaje</h3>
+        <form id="add-lang-form">
+          <input name="lenguaje" placeholder="Ej: Python" required />
+          <button type="submit">Agregar</button>
+        </form>
+      </section>
+
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
