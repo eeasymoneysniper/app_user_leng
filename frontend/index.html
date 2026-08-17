@@ -3,40 +3,150 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>App Lenguajes - Frontend</title>
-    <link rel="stylesheet" href="/static/styles.css" />
+    <title>App Lenguajes</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/css/styles.css" />
   </head>
   <body>
-    <main>
-      <h1>App Lenguajes</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">App Lenguajes</a>
+        <div class="d-flex">
+          <button id="btn-show-login" class="btn btn-outline-light me-2">Iniciar sesión</button>
+          <button id="btn-show-register" class="btn btn-light">Registro</button>
+        </div>
+      </div>
+    </nav>
 
-      <section id="login-section">
-        <h2>Login</h2>
-        <form id="login-form">
-          <label>DNI: <input name="dni" required /></label><br/>
-          <label>Password: <input name="password" type="password" required /></label><br/>
-          <button type="submit">Entrar</button>
-        </form>
-      </section>
+    <main class="container my-4">
+      <div id="alerts"></div>
 
-      <section id="user-section" style="display:none;">
-        <h2>Usuario <span id="user-id-display"></span></h2>
-        <div>
-          <label>Usuario ID: <input id="user-id-input" type="number" value="1" /></label>
-          <button id="load-langs">Cargar lenguajes</button>
+      <!-- Login / Register cards -->
+      <div id="auth-cards" class="row gy-3">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Iniciar sesión</div>
+            <div class="card-body">
+              <form id="login-form">
+                <div class="mb-2">
+                  <label class="form-label">DNI</label>
+                  <input class="form-control" name="dni" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Contraseña</label>
+                  <input class="form-control" name="password" type="password" required />
+                </div>
+                <button class="btn btn-primary" type="submit">Entrar</button>
+              </form>
+            </div>
+          </div>
         </div>
 
-        <ul id="langs-list"></ul>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Registro</div>
+            <div class="card-body">
+              <form id="register-form">
+                <div class="mb-2">
+                  <label class="form-label">Nombre</label>
+                  <input class="form-control" name="nombre" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">DNI</label>
+                  <input class="form-control" name="dni" required type="number" />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Contraseña</label>
+                  <input class="form-control" name="password" type="password" required minlength="6" />
+                </div>
+                <button class="btn btn-success" type="submit">Crear cuenta</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <h3>Agregar lenguaje</h3>
-        <form id="add-lang-form">
-          <input name="lenguaje" placeholder="Ej: Python" required />
-          <button type="submit">Agregar</button>
-        </form>
-      </section>
+      <!-- Dashboard -->
+      <div id="dashboard" style="display:none;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h3>Usuario: <span id="display-username"></span> <small class="text-muted" id="display-id"></small></h3>
+          </div>
+          <div>
+            <button id="btn-logout" class="btn btn-outline-secondary">Cerrar sesión</button>
+          </div>
+        </div>
 
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row g-2">
+              <div class="col-md-4">
+                <input id="search-input" class="form-control" placeholder="Buscar lenguaje..." />
+              </div>
+              <div class="col-md-3">
+                <select id="per-page" class="form-select">
+                  <option value="5">5 por página</option>
+                  <option value="10" selected>10 por página</option>
+                  <option value="20">20 por página</option>
+                </select>
+              </div>
+              <div class="col-md-5 text-end">
+                <form id="add-lang-form" class="d-inline-flex" onsubmit="return false;">
+                  <input id="add-leng-input" class="form-control me-2" placeholder="Nuevo lenguaje" required />
+                  <button id="add-leng-btn" class="btn btn-primary">Agregar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <ul id="langs-list" class="list-group mb-3"></ul>
+            <nav>
+              <ul id="pagination" class="pagination"></ul>
+            </nav>
+          </div>
+        </div>
+      </div>
     </main>
 
-    <script src="/static/app.js"></script>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="edit-form">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar lenguaje</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-2">
+                <label class="form-label">Lenguaje</label>
+                <input id="edit-leng-input" class="form-control" required />
+              </div>
+              <input type="hidden" id="edit-leng-id" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1070">
+      <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/static/js/app.js"></script>
   </body>
 </html>
