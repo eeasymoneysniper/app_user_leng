@@ -6,7 +6,7 @@ class users(Base):
     __tablename__ = "users"
     
     user_id = Column(Integer,nullable=False,primary_key=True,index=True,unique=True)
-    nombre = Column(String(100))
+    nombre = Column(String(100),nullable=False)
     dni = Column(Integer,nullable=False,unique=True)
     password = Column(String(100),nullable=False)
     created_at = Column(DateTime,server_default=func.now())

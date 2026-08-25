@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-sqlalchemy
-python-dotenv
-pwdlib
-PyJWT
-alembic
