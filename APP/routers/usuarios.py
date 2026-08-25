@@ -71,12 +71,5 @@ async def actualizar(user_id : int,usuario : usuario_update ,db : Annotated[Sess
     return user
 
 
-#AUTH y JWT
-@router.post("/login")
-async def login(form : Annotated[OAuth2PasswordRequestForm, Depends()],db : Annotated[Session,Depends(get_db)]):
-    usuario = db.query(users).filter(users.dni == int(form.username)).first()
-    if not usuario or not verify(form.password,usuario.password):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Credenciales inválidas")
-    
-    return {"access_token" : crear_token(data = {"sub" : str(usuario.user_id)}),"token_type" : "bearer"}
-    
+
+

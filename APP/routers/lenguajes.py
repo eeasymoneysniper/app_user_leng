@@ -56,6 +56,7 @@ async def agregar_lenguajes(user_id : int,lenguaje_nuevo : leng_post,db : Annota
 @router.put("/lenguajes/{leng_id}",status_code=status.HTTP_200_OK,response_model=leng_response)
 async def actualizar_lenguaje(leng_id : int,lenguaje : leng_put,db : Annotated[Session,Depends(get_db)],current_user : Annotated[users,Depends(get_current_user)]):
     lenguaje_existente = db.query(lenguajes).filter(lenguajes.leng_id == leng_id).first()
+    
     if not lenguaje_existente:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Lenguaje no encontrado.")
     
@@ -64,6 +65,7 @@ async def actualizar_lenguaje(leng_id : int,lenguaje : leng_put,db : Annotated[S
     
     if lenguaje.lenguajes != None:
         lenguaje_existente.lenguajes = lenguaje.lenguajes
+    
     
     db.commit()
     db.refresh(lenguaje_existente)
@@ -85,5 +87,3 @@ async def eliminar_lenguaje(leng_id : int , db : Annotated[Session,Depends(get_d
 
 
     
-    
-
